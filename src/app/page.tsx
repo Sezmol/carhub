@@ -1,95 +1,62 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from 'next/image';
+import styles from './page.module.scss';
+import CustomButton from '@/components/CustomButton/CustomButton';
+import SearchBar from '@/components/SearchBar/SearchBar';
+import { fetchCars } from '@/utils';
+import { CarProps, FilterProps } from '@/types';
+import CarCard from '@/components/CarCard/CarCard';
 
-export default function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: FilterProps;
+}) {
+  const cars: CarProps[] = await fetchCars({
+    manufacturer: searchParams.manufacturer || '',
+    year: searchParams.year || 2022,
+    fuel: searchParams.fuel || '',
+    limit: searchParams.limit || 10,
+    model: searchParams.model || '',
+  });
+  const isDataEmpty = !cars || cars.length > 1;
+
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <div className={styles.hero}>
+        <div className={styles.text}>
+          <h1>Find, book, or rent a car - quickly and easily!</h1>
+          <p>
+            Streamline your car rental experience with our effortless booking
+            process
+          </p>
+          <CustomButton title="Explore Cars" color="blue" />
+        </div>
+        <div className={styles.images}>
+          <Image
+            src="/hero.png"
+            alt="Car"
+            height={500}
+            width={800}
+            className={styles.car}
+          />
+          <div className={styles.car_bg} />
         </div>
       </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <section className={styles.cars_section} id="discover">
+        <div>
+          <h1>Car Catalogue</h1>
+          <p>Explore the cars you might like</p>
+        </div>
+        <SearchBar />
+        <div className={styles.cars}>
+          {isDataEmpty ? (
+            cars.map((car) => <CarCard car={car} />)
+          ) : (
+            <div>Cars not found</div>
+          )}
+        </div>
+      </section>
     </main>
-  )
+  );
 }

@@ -1,0 +1,41 @@
+.listbox {
+  position: relative;
+
+  .button {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+    border: none;
+    background-color: white;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.199);
+    width: 130px;
+    padding: 15px;
+    border-radius: 15px;
+    font-size: 18px;
+  }
+
+  .ul {
+    position: absolute;
+    overflow-y: auto;
+    top: 60px;
+    left: -2px;
+    border: 1px solid rgb(241, 241, 241);
+    z-index: 1;
+
+    .li {
+      cursor: pointer;
+      width: 130px;
+      font-size: 16px;
+      padding: 10px;
+      background-color: white;
+      color: black;
+    }
+
+    .active {
+      background-color: blue;
+      color: white;
+    }
+  }
+}
