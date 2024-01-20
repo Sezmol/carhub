@@ -51,7 +51,7 @@ export default async function Home({
         <SearchBar />
         <div className={styles.cars}>
           {isDataEmpty ? (
-            cars.map((car) => <CarCard car={car} />)
+            cars.map((car, i) => <CarCard key={i} car={car} />)
           ) : (
             <div>Cars not found</div>
           )}

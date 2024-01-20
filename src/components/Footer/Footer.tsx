@@ -20,7 +20,9 @@ const Footer = () => {
               <ul>
                 {footerLink.links.map((link) => (
                   <li>
-                    <a href={link.url}>{link.title}</a>
+                    <a key={link.url} href={link.url}>
+                      {link.title}
+                    </a>
                   </li>
                 ))}
               </ul>
