@@ -33,13 +33,13 @@ const CarDetails = ({ car, isOpen, closeModal }: CarDetailsProps) => {
         <div className={styles.details}>
           <div className={styles.key}>
             {Object.entries(car).map((arr) => (
-              <div>{arr[0].replace(/_/, ' ')}</div>
+              <div key={arr[0]}>{arr[0].replace(/_/, ' ')}</div>
             ))}
           </div>
           <div className={styles.value}>
             {Object.entries(car).map((arr) => {
               let value = arr[0] === 'transmission' ? trans : arr[1];
-              return <div>{value}</div>;
+              return <div key={arr[0]}>{value}</div>;
             })}
           </div>
         </div>
